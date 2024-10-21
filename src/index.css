@@ -1,6 +1,7 @@
 :root {
   --pink: #e26ca4;
   --black: #121212;
+  --p-global: 1.5rem;
 }
 
 * {
@@ -13,4 +14,25 @@ body {
   color: var(--black);
   text-transform: lowercase;
   font-weight: 600;
+}
+
+a {
+  color: inherit;
+
+  &[target='_blank']::after {
+    content: '↗';
+    margin-left: 2px;
+  }
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  font-weight: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
 }

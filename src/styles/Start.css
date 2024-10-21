@@ -1,13 +1,13 @@
-.container {
+.start-container {
   background-color: var(--pink);
   height: 100svh;
-  padding: 24px;
+  padding: var(--p-global);
 
   header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 1rem;
     margin-top: 100px;
 
     > img {
@@ -19,5 +19,10 @@
       text-align: center;
       font-size: larger;
     }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 1rem;
   }
 }

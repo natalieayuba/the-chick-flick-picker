@@ -1,14 +1,8 @@
 .button {
-  background-color: transparent;
-  border: none;
   height: 60px;
   padding: 0 24px;
   border-radius: 4px;
   font-size: large;
-  font-family: inherit;
-  text-transform: inherit;
-  font-weight: inherit;
-  cursor: pointer;
   min-width: 200px;
   position: relative;
   z-index: 0;
@@ -20,5 +14,6 @@
     width: 100%;
     height: 100%;
     z-index: -1;
+    pointer-events: none;
   }
 }
