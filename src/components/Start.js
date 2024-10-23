@@ -3,7 +3,7 @@ import logo from '../images/logo.png';
 import Button from './Button';
 
 const Start = ({ next }) => (
-  <div className='start-container'>
+  <div className='container start-container'>
     <header>
       <img alt='The Chick Flick Picker' src={logo} />
       <p>Find the perfect girly film to watch just for you</p>

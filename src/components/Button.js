@@ -1,9 +1,5 @@
-import '../styles/Button.css';
-import border from '../images/button-border.svg';
-
 const Button = ({ children, className, ...rest }) => (
-  <button className={`button ${className}`} type='button' {...rest}>
-    <img alt='Button border' src={border} />
+  <button className={`input ${className}`} type='button' {...rest}>
     {children}
   </button>
 );

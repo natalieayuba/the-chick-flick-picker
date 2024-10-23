@@ -1,0 +1,64 @@
+.end-container {
+  background-color: var(--pink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0;
+
+    .small {
+      display: block;
+      font-size: medium;
+      margin-bottom: 0.3rem;
+    }
+  }
+
+  label {
+    display: flex;
+    .checkbox {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .poster {
+    padding: 1.5rem 0;
+    img {
+      max-width: 230px;
+    }
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    button::before {
+      content: '↻';
+      margin-right: 0.5rem;
+    }
+  }
+
+  .rating {
+    position: relative;
+    top: 0.5rem;
+    margin-top: auto;
+    font-size: small;
+
+    .rating-options {
+      margin-top: 0.25rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+  }
+}
