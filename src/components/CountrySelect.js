@@ -1,63 +1,81 @@
 import { useRef, useState, useEffect } from 'react';
-// import flags from 'country-flag-icons/react/3x2';
+import flags from 'country-flag-icons/react/3x2';
 
 const CountrySelect = () => {
   const inputRef = useRef(null);
-  const countries = [
-    'Argentina',
-    'Austria',
-    'Australia',
-    'Azerbaijan',
-    'Algeria',
-  ];
-  const [filteredCountries, setFilteredCountries] = useState(countries);
+  const countries = {
+    au: {
+      countryCode: 'au',
+      name: 'Australia',
+      services: [],
+    },
+    ie: {
+      countryCode: 'ie',
+      name: 'Ireland',
+      services: [],
+    },
+    hr: {
+      countryCode: 'hr',
+      name: 'Croatia',
+      services: [],
+    },
+  };
 
+  const [filteredCountries, setFilteredCountries] = useState(countries);
   const [showMenu, setShowMenu] = useState(false);
   const [inputCountry, setInputCountry] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const handleChange = (e) => setInputCountry(e.target.value);
 
   useEffect(() => {
-    setFilteredCountries(
-      inputCountry === ''
-        ? countries
-        : filteredCountries.filter((country) =>
-            country
-              .toLowerCase()
-              .split(' ')
-              .some((word) => word.startsWith(inputCountry.toLowerCase()))
-          )
-    );
+    if (inputCountry) {
+      setFilteredCountries(
+        inputCountry === ''
+          ? countries
+          : filteredCountries.filter((country) =>
+              country
+                .toLowerCase()
+                .split(' ')
+                .some((word) => word.startsWith(inputCountry.toLowerCase()))
+            )
+      );
+    }
   }, [countries, filteredCountries, inputCountry]);
 
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.value = selectedCountry;
-      setShowMenu(false);
-      inputRef.current.blur();
+  const handleBlur = (e) => {
+    if (selectedCountry) {
+      e.target.value = countries[selectedCountry].name;
     }
-  }, [selectedCountry]);
+    setShowMenu(false);
+  };
 
   return (
     <div className='dropdown'>
-      <label className='input'>
-        <input
-          onClick={() => setShowMenu(!showMenu)}
-          ref={inputRef}
-          onChange={handleChange}
-          placeholder='Select your country'
-        />
-      </label>
+      <input
+        aria-label='Country'
+        className='input'
+        onClick={() => setShowMenu(!showMenu)}
+        onBlur={handleBlur}
+        ref={inputRef}
+        onChange={handleChange}
+        placeholder='Select your country'
+      />
       {showMenu && (
-        <div className='dropdown-content'>
-          {filteredCountries.length > 0 ? (
+        <div className='dropdown-content' data-testid='dropdown-content'>
+          {Object.values(filteredCountries).length > 0 ? (
             <ol className='countries'>
-              {filteredCountries.map((country) => (
-                <li key={country} onClick={() => setSelectedCountry(country)}>
-                  <img alt={country} src='' className='flag' />
-                  {country}
-                </li>
-              ))}
+              {Object.values(filteredCountries).map(({ countryCode, name }) => {
+                const Flag = flags[countryCode.toUpperCase()];
+                return (
+                  <li
+                    key={countryCode}
+                    onMouseDown={() => setSelectedCountry(countryCode)}
+                  >
+                    <Flag className='flag' />
+                    {name}
+                  </li>
+                );
+              })}
             </ol>
           ) : (
             <span className='empty'>No countries found.</span>

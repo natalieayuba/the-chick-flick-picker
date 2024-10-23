@@ -85,6 +85,7 @@
           .flag {
             aspect-ratio: 3/2;
             width: 1.5rem;
+            border-radius: 2px;
           }
         }
       }
