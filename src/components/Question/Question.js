@@ -2,11 +2,11 @@ import Button from '../Button';
 import styles from './Question.module.css';
 import CountrySelect from '../CountrySelect/CountrySelect';
 import { cloneElement, useState, useEffect, useRef } from 'react';
-import StreamingServices from '../StreamingServices/StreamingServices';
-import Vibes from '../Vibes';
-import Tropes from '../Tropes';
 import DecadeRange from '../DecadeRange/DecadeRange';
 import Bar from '../Bar/Bar';
+import List from '../List';
+import { tropes, vibes } from '../../config';
+import StreamingServices from '../StreamingServices/StreamingServices';
 
 export const questions = [
   {
@@ -19,11 +19,11 @@ export const questions = [
   },
   {
     question: 'What vibe are you in the mood for?',
-    content: <Vibes />,
+    content: <List list={vibes} />,
   },
   {
     question: 'Pick your top 3 favourite chick flick tropes',
-    content: <Tropes />,
+    content: <List list={tropes} />,
   },
   {
     question: 'What decade do you want the movie to be in?',
@@ -37,11 +37,19 @@ const Question = ({ questionIndex, next, prev }) => {
     services: [],
     vibes: [],
     tropes: [],
-    decade: { start: 0, end: 0 },
+    decade: {
+      start: 1960,
+      end: Math.round(new Date().getFullYear() / 10) * 10,
+    },
   };
 
   const contentRef = useRef(null);
   const [answers, setAnswers] = useState(defaultAnswers);
+  const buttonDisabled = Array.isArray(Object.values(answers)[questionIndex])
+    ? Object.values(answers)[questionIndex][0] ===
+      Object.values(defaultAnswers)[questionIndex][0]
+    : Object.values(answers)[questionIndex] ===
+      Object.values(defaultAnswers)[questionIndex];
 
   const updateAnswers = (key, value) =>
     setAnswers({ ...answers, [key]: value });
@@ -84,7 +92,7 @@ const Question = ({ questionIndex, next, prev }) => {
           id='progress-bar'
         />
         <button className={styles['back-button']} onClick={prev}>
-          &lt; Back
+          &lt; Back {questionIndex === 0 && ' to home'}
         </button>
       </div>
       <div className={styles.title}>
@@ -100,16 +108,14 @@ const Question = ({ questionIndex, next, prev }) => {
           {cloneElement(questions[questionIndex].content, {
             updateAnswers,
             prevAnswer: Object.values(answers)[questionIndex],
+            name: Object.keys(answers)[questionIndex],
           })}
         </div>
       </div>
       <Button
         className={styles['next-button']}
         onClick={next}
-        // disabled={
-        //   Object.values(answers)[questionIndex] ===
-        //   Object.values(defaultAnswers)[questionIndex]
-        // }
+        disabled={buttonDisabled}
       >
         {questionIndex === questions.length - 1
           ? 'Find my perfect flick!'

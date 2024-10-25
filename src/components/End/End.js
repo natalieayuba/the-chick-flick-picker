@@ -30,6 +30,7 @@ const End = ({ reset }) => {
       <div className={styles.nav}>
         {recommendedMovie.streamingLinks.map(({ name, url, img }) => (
           <a
+            key={name}
             href={url}
             className='box'
             target='_blank'

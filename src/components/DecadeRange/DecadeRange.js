@@ -1,41 +1,35 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import Bar from '../Bar/Bar';
 import styles from './DecadeRange.module.css';
 
 const DecadeRange = ({ prevAnswer, updateAnswers }) => {
   const decadeRange = {
-    min: 1960,
-    max: Math.round(new Date().getFullYear() / 10) * 10,
+    start: 1960,
+    end: Math.round(new Date().getFullYear() / 10) * 10,
   };
 
-  useEffect(() => {
-    if (Object.values(prevAnswer).every((n) => n === 0)) {
-      updateAnswers('decade', { start: decadeRange.min, end: decadeRange.max });
-    }
-  }, []);
-
   const decadeToDecimal = (decade) =>
-    (decade - decadeRange.min) / (decadeRange.max - decadeRange.min);
+    (decade - decadeRange.start) / (decadeRange.end - decadeRange.start);
 
   const decimalToDecade = (decimal) =>
-    decimal * (decadeRange.max - decadeRange.min) + decadeRange.min;
+    decimal * (decadeRange.end - decadeRange.start) + decadeRange.start;
 
   const handleTouchMove = (e) => {
     const x = e.touches[0].pageX - 24 - e.target.clientWidth / 2;
     const maxDistance = e.target.parentElement.clientWidth - 24;
 
     if (x > 0 && x < maxDistance) {
-      const step = maxDistance / ((decadeRange.max - decadeRange.min) / 10);
+      const step = maxDistance / ((decadeRange.end - decadeRange.start) / 10);
       const distance = Math.round(x / step) * step;
-      const thumbKey = e.target.id.includes('min') ? 'min' : 'max';
+      const thumbKey = e.target.id.includes('start') ? 'start' : 'end';
 
       if (
-        (thumbKey === 'min' &&
-          decimalToDecade(distance / maxDistance) < prevAnswer.max) ||
-        (thumbKey === 'max' &&
-          decimalToDecade(distance / maxDistance) > prevAnswer.min)
+        (thumbKey === 'start' &&
+          decimalToDecade(distance / maxDistance) < prevAnswer.end) ||
+        (thumbKey === 'end' &&
+          decimalToDecade(distance / maxDistance) > prevAnswer.start)
       ) {
-        updateAnswers('tropes', {
+        updateAnswers('decade', {
           ...prevAnswer,
           [thumbKey]: decimalToDecade(distance / maxDistance),
         });
@@ -45,19 +39,19 @@ const DecadeRange = ({ prevAnswer, updateAnswers }) => {
 
   return (
     <>
-      <div className={styles['range-slider']}>
+      <div className={styles.slider}>
         <Bar
           offsets={{
-            start: decadeToDecimal(prevAnswer.min),
-            end: decadeToDecimal(prevAnswer.max),
+            start: decadeToDecimal(prevAnswer.start),
+            end: decadeToDecimal(prevAnswer.end),
           }}
-          id='range-slider'
+          id='slider'
         />
         {Object.keys(decadeRange).map((key) => (
           <div
             key={key}
-            id={`range-slider-thumb-${key}`}
-            className={styles['range-slider-thumb']}
+            id={`slider-thumb-${key}`}
+            className={styles['slider-thumb']}
             onTouchMove={handleTouchMove}
             style={{
               left: `calc(90% * ${decadeToDecimal(prevAnswer[key])})`,
@@ -65,14 +59,12 @@ const DecadeRange = ({ prevAnswer, updateAnswers }) => {
           ></div>
         ))}
       </div>
-      <p className={styles['decade-range']}>
+      <p className={styles.range}>
         {Object.values(prevAnswer).map((decade, index) => (
           <Fragment key={decade}>
             {decade}
             <sub>s</sub>
-            {index === 0 && (
-              <span className={styles['decade-range-dash']}>&mdash;</span>
-            )}
+            {index === 0 && <span>&mdash;</span>}
           </Fragment>
         ))}
       </p>
