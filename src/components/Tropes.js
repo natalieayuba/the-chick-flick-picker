@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import CheckboxListItem from './CheckboxListItem';
+import CheckboxListItem from './CheckboxListItem/CheckboxListItem';
 
-const Tropes = () => {
+const Tropes = ({ prevAnswer, updateAnswers }) => {
   const tropes = [
     'Manic pixie dream girl',
     'Girlboss in the big city',
@@ -17,27 +16,23 @@ const Tropes = () => {
     'The fake relationship',
   ];
 
-  const [selectedTropes, setSelectedTropes] = useState([]);
-
   const handleChange = (e) => {
-    setSelectedTropes(
+    updateAnswers(
+      'tropes',
       e.target.checked
-        ? [...selectedTropes, e.target.value]
-        : selectedTropes.filter((trope) => trope !== e.target.value)
+        ? [...prevAnswer, e.target.value]
+        : prevAnswer.filter((answer) => answer !== e.target.value)
     );
   };
 
-  return (
-    <>
-      {tropes.map((trope) => (
-        <CheckboxListItem
-          value={trope}
-          key={trope}
-          handleChange={handleChange}
-        />
-      ))}
-    </>
-  );
+  return tropes.map((trope) => (
+    <CheckboxListItem
+      value={trope}
+      key={trope}
+      onChange={handleChange}
+      checked={prevAnswer && prevAnswer.includes(trope)}
+    />
+  ));
 };
 
 export default Tropes;

@@ -1,4 +1,4 @@
-.start-container {
+.container {
   background-color: var(--pink);
 
   header {
@@ -7,15 +7,12 @@
     align-items: center;
     gap: 1rem;
     margin-top: 100px;
+    text-align: center;
+    font-size: larger;
 
-    > img {
+    .logo {
       width: 150px;
       height: 150px;
-    }
-
-    p {
-      text-align: center;
-      font-size: larger;
     }
 
     button {

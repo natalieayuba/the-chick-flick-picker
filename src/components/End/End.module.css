@@ -1,4 +1,4 @@
-.end-container {
+.container {
   background-color: var(--pink);
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
     font-size: 1.6rem;
     margin-bottom: 0;
 
-    .small {
+    span {
       display: block;
       font-size: medium;
       margin-bottom: 0.3rem;
@@ -19,13 +19,12 @@
 
   label {
     display: flex;
-    .checkbox {
-      margin-right: 0.5rem;
-    }
+    gap: 0.5rem;
   }
 
   .poster {
     padding: 1.5rem 0;
+
     img {
       max-width: 230px;
     }

@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import CheckboxListItem from './CheckboxListItem';
+import CheckboxListItem from '../CheckboxListItem/CheckboxListItem';
+import styles from './StreamingServices.module.css';
 
-const StreamingServices = () => {
+const StreamingServices = ({ prevAnswer, updateAnswers }) => {
   const services = [
     {
       id: 'netflix',
@@ -2707,25 +2707,25 @@ const StreamingServices = () => {
     },
   ];
 
-  const [selectedServices, setSelectedServices] = useState([]);
-
   const handleChange = (e) => {
-    setSelectedServices(
+    updateAnswers(
+      'services',
       e.target.checked
-        ? [...selectedServices, e.target.value]
-        : selectedServices.filter(({ id }) => id !== e.target.value)
+        ? [...prevAnswer, e.target.value]
+        : prevAnswer.filter((answer) => answer !== e.target.value)
     );
   };
 
   return (
-    <div className='card-grid'>
+    <div className={styles['card-grid']}>
       {services.map(({ id, imageSet }) => (
         <CheckboxListItem
           value={id}
           key={id}
-          handleChange={handleChange}
+          onChange={handleChange}
           className='checkbox-card'
           image={imageSet.lightThemeImage}
+          checked={prevAnswer.includes(id)}
         />
       ))}
     </div>

@@ -1,7 +1,8 @@
-import '../styles/End.css';
+import styles from './End.module.css';
+import Checkbox from '../Checkbox/Checkbox';
 
 const End = ({ reset }) => {
-  const reccomendedMovie = {
+  const recommendedMovie = {
     name: 'Legally Blonde',
     year: 2001,
     poster:
@@ -16,21 +17,21 @@ const End = ({ reset }) => {
   };
 
   return (
-    <div className='end-container container'>
+    <div className={`${styles.container} container`}>
       <h2>
-        <span className='small'>You should watch</span> Legally Blonde (2001)
+        <span>You should watch</span> Legally Blonde (2001)
       </h2>
-      <div className='poster'>
+      <div className={styles.poster}>
         <img
-          alt={`${reccomendedMovie.name} Poster`}
-          src={reccomendedMovie.poster}
+          alt={`${recommendedMovie.name} Poster`}
+          src={recommendedMovie.poster}
         />
       </div>
-      <div className='nav'>
-        {reccomendedMovie.streamingLinks.map(({ name, url, img }) => (
+      <div className={styles.nav}>
+        {recommendedMovie.streamingLinks.map(({ name, url, img }) => (
           <a
             href={url}
-            className='input'
+            className='box'
             target='_blank'
             rel='noreferrer noopener'
           >
@@ -39,15 +40,11 @@ const End = ({ reset }) => {
         ))}
         <button onClick={reset}>Start again</button>
       </div>
-      <div className='rating'>
+      <div className={styles.rating}>
         Was this a good recommendation?
-        <div className='rating-options'>
+        <div className={styles['rating-options']}>
           {['Yes', 'no'].map((value) => (
-            <label htmlFor={value} key={value}>
-              <input id={value} type='radio' value={value} name='rating' />
-              <div className='checkbox'></div>
-              {value}
-            </label>
+            <Checkbox value={value} key={value} name='rating' type='radio' />
           ))}
         </div>
       </div>

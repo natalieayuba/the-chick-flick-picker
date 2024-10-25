@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .topnav {
+    margin-bottom: 1rem;
+
+    .back-button {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .title {
+    text-align: center;
+
+    span {
+      font-size: large;
+    }
+
+    h2 {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .content-container {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+
+    .content {
+      height: 100%;
+      overflow: auto;
+    }
+  }
+
+  .next-button {
+    margin-top: 1.5rem;
+  }
+}

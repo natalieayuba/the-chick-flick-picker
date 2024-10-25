@@ -1,0 +1,24 @@
+.slider {
+  padding: 3px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  .slider-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: grab;
+    width: 2rem;
+    height: 2em;
+    background: url('../../images/circle.svg') no-repeat center/contain;
+  }
+}
+
+.range {
+  text-align: center;
+
+  span {
+    margin: 0 0.5rem;
+  }
+}

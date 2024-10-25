@@ -1,13 +1,18 @@
-import { Fragment, useState } from 'react';
-import Bar from './Bar';
+import { Fragment, useEffect } from 'react';
+import Bar from '../Bar/Bar';
+import styles from './DecadeRange.module.css';
 
-const DecadeRange = () => {
+const DecadeRange = ({ prevAnswer, updateAnswers }) => {
   const decadeRange = {
     min: 1960,
     max: Math.round(new Date().getFullYear() / 10) * 10,
   };
 
-  const [selectedDecadeRange, setSelectedDecadeRange] = useState(decadeRange);
+  useEffect(() => {
+    if (Object.values(prevAnswer).every((n) => n === 0)) {
+      updateAnswers('decade', { start: decadeRange.min, end: decadeRange.max });
+    }
+  }, []);
 
   const decadeToDecimal = (decade) =>
     (decade - decadeRange.min) / (decadeRange.max - decadeRange.min);
@@ -26,12 +31,12 @@ const DecadeRange = () => {
 
       if (
         (thumbKey === 'min' &&
-          decimalToDecade(distance / maxDistance) < selectedDecadeRange.max) ||
+          decimalToDecade(distance / maxDistance) < prevAnswer.max) ||
         (thumbKey === 'max' &&
-          decimalToDecade(distance / maxDistance) > selectedDecadeRange.min)
+          decimalToDecade(distance / maxDistance) > prevAnswer.min)
       ) {
-        setSelectedDecadeRange({
-          ...selectedDecadeRange,
+        updateAnswers('tropes', {
+          ...prevAnswer,
           [thumbKey]: decimalToDecade(distance / maxDistance),
         });
       }
@@ -40,32 +45,34 @@ const DecadeRange = () => {
 
   return (
     <>
-      <div className='range-slider'>
+      <div className={styles['range-slider']}>
         <Bar
           offsets={{
-            start: decadeToDecimal(selectedDecadeRange.min),
-            end: decadeToDecimal(selectedDecadeRange.max),
+            start: decadeToDecimal(prevAnswer.min),
+            end: decadeToDecimal(prevAnswer.max),
           }}
-          gradientId='range'
+          id='range-slider'
         />
         {Object.keys(decadeRange).map((key) => (
           <div
             key={key}
             id={`range-slider-thumb-${key}`}
-            className='range-slider-thumb'
+            className={styles['range-slider-thumb']}
             onTouchMove={handleTouchMove}
             style={{
-              left: `calc(91% * ${decadeToDecimal(selectedDecadeRange[key])})`,
+              left: `calc(90% * ${decadeToDecimal(prevAnswer[key])})`,
             }}
           ></div>
         ))}
       </div>
-      <p className='decade-range'>
-        {Object.values(selectedDecadeRange).map((decade, index) => (
+      <p className={styles['decade-range']}>
+        {Object.values(prevAnswer).map((decade, index) => (
           <Fragment key={decade}>
             {decade}
             <sub>s</sub>
-            {index === 0 && <span className='decade-range-dash'>&mdash;</span>}
+            {index === 0 && (
+              <span className={styles['decade-range-dash']}>&mdash;</span>
+            )}
           </Fragment>
         ))}
       </p>

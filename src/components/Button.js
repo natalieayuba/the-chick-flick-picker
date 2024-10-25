@@ -1,5 +1,5 @@
 const Button = ({ children, className, ...rest }) => (
-  <button className={`input ${className}`} type='button' {...rest}>
+  <button className={`box ${className}`} type='button' {...rest}>
     {children}
   </button>
 );
