@@ -108,7 +108,7 @@ const Question = ({ questionIndex, next, prev }) => {
           {cloneElement(questions[questionIndex].content, {
             updateAnswers,
             prevAnswer: Object.values(answers)[questionIndex],
-            name: Object.keys(answers)[questionIndex],
+            answerKey: Object.keys(answers)[questionIndex],
           })}
         </div>
       </div>

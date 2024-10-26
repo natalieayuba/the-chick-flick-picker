@@ -2,8 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import flags from 'country-flag-icons/react/3x2';
 import styles from './CountrySelect.module.css';
 
-const CountrySelect = ({ prevAnswer, updateAnswers }) => {
-  const inputRef = useRef(null);
+const CountrySelect = ({ prevAnswer, updateAnswers, answerKey }) => {
   const countries = {
     au: {
       countryCode: 'au',
@@ -21,35 +20,42 @@ const CountrySelect = ({ prevAnswer, updateAnswers }) => {
       services: [],
     },
   };
+  const inputRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState('');
 
   const [filteredCountries, setFilteredCountries] = useState(
     Object.values(countries)
   );
-  const [showMenu, setShowMenu] = useState(false);
-  const [inputCountry, setInputCountry] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('');
-
-  const handleChange = (e) => setInputCountry(e.target.value);
 
   useEffect(() => {
     setFilteredCountries((filteredCountries) =>
-      inputCountry === ''
+      query === ''
         ? Object.values(countries)
         : filteredCountries.filter(({ name }) =>
             name
               .toLowerCase()
               .split(' ')
-              .some((word) => word.startsWith(inputCountry.toLowerCase()))
+              .some((word) => word.startsWith(query.toLowerCase()))
           )
     );
-  }, [inputCountry]);
+  }, [query]);
 
-  useEffect(() => {
-    if (updateAnswers && selectedCountry && inputRef.current) {
-      inputRef.current.value = countries[selectedCountry].name;
-      updateAnswers('country', selectedCountry);
+  const handleMouseDown = (countryCode, name) => {
+    if (inputRef.current) {
+      inputRef.current.value = name;
+      updateAnswers(answerKey, countryCode);
+      setQuery('');
     }
-  }, [selectedCountry]);
+  };
+
+  const handleChange = (e) => {
+    if (inputRef.current) {
+      setIsOpen(true);
+      inputRef.current.value = e.target.value;
+      setQuery(e.target.value);
+    }
+  };
 
   return (
     <div className={styles.dropdown}>
@@ -57,13 +63,13 @@ const CountrySelect = ({ prevAnswer, updateAnswers }) => {
         ref={inputRef}
         aria-label='Country'
         className='box'
-        value={prevAnswer ? countries[prevAnswer].name : ''}
-        onClick={() => setShowMenu(!showMenu)}
-        onBlur={() => setShowMenu(false)}
+        defaultValue={prevAnswer && countries[prevAnswer].name}
+        onClick={() => setIsOpen(!isOpen)}
+        onBlur={() => setIsOpen(false)}
         onChange={handleChange}
         placeholder='Select your country'
       />
-      {showMenu && (
+      {isOpen && (
         <div
           className={styles['dropdown-content']}
           data-testid='dropdown-content'
@@ -75,7 +81,7 @@ const CountrySelect = ({ prevAnswer, updateAnswers }) => {
                 return (
                   <li
                     key={countryCode}
-                    onMouseDown={() => setSelectedCountry(countryCode)}
+                    onMouseDown={() => handleMouseDown(countryCode, name)}
                   >
                     <Flag className={styles.flag} />
                     {name}
