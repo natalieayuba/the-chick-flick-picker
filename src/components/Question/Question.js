@@ -1,4 +1,4 @@
-import Button from '../Button';
+import Button from '../../Button';
 import styles from './Question.module.css';
 import CountrySelect from '../CountrySelect/CountrySelect';
 import { cloneElement, useState, useEffect, useRef } from 'react';
@@ -96,8 +96,8 @@ const Question = ({ questionIndex, next, prev }) => {
         </button>
       </div>
       <div className={styles.title}>
-        <span>Q{questionIndex + 1}</span>
-        <h2>{questions[questionIndex].question}</h2>
+        <span className='text-md'>Q{questionIndex + 1}</span>
+        <h2 className='text-lg'>{questions[questionIndex].question}</h2>
       </div>
       <div className={`${styles['content-container']}`}>
         <div

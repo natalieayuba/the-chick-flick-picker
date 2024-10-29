@@ -42,7 +42,7 @@ const CountrySelect = ({ prevAnswer, updateAnswers, answerKey }) => {
   }, [query]);
 
   const handleMouseDown = (countryCode, name) => {
-    if (inputRef.current) {
+    if (updateAnswers && inputRef.current) {
       inputRef.current.value = name;
       updateAnswers(answerKey, countryCode);
       setQuery('');
@@ -60,9 +60,10 @@ const CountrySelect = ({ prevAnswer, updateAnswers, answerKey }) => {
   return (
     <div className={styles.dropdown}>
       <input
+        type='text'
         ref={inputRef}
         aria-label='Country'
-        className='box'
+        className='box input'
         defaultValue={prevAnswer && countries[prevAnswer].name}
         onClick={() => setIsOpen(!isOpen)}
         onBlur={() => setIsOpen(false)}
@@ -71,7 +72,7 @@ const CountrySelect = ({ prevAnswer, updateAnswers, answerKey }) => {
       />
       {isOpen && (
         <div
-          className={styles['dropdown-content']}
+          className={`box ${styles['dropdown-content']}`}
           data-testid='dropdown-content'
         >
           {filteredCountries.length > 0 ? (
@@ -81,6 +82,7 @@ const CountrySelect = ({ prevAnswer, updateAnswers, answerKey }) => {
                 return (
                   <li
                     key={countryCode}
+                    title={name}
                     onMouseDown={() => handleMouseDown(countryCode, name)}
                   >
                     <Flag className={styles.flag} />

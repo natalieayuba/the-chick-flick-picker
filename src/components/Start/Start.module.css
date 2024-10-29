@@ -2,27 +2,40 @@
   background-color: var(--pink);
 
   header {
+    height: 100%;
+    max-width: 500px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
-    margin-top: 100px;
     text-align: center;
     font-size: larger;
 
     .logo {
-      width: 150px;
-      height: 150px;
+      display: block;
+      margin-top: -20px;
+      width: 280px;
+      max-width: 100%;
+
+      @media screen and (min-width: 450px) {
+        width: 400px;
+      }
+
+      p {
+        margin-top: 0;
+      }
     }
 
     button {
-      width: 200px;
+      max-width: 200px;
     }
   }
 
   footer {
     position: absolute;
-    font-size: small;
+    font-size: 0.875rem;
     left: 0.75rem;
     bottom: 0.75rem;
   }

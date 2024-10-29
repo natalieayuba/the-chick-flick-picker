@@ -18,7 +18,7 @@ const End = ({ reset }) => {
 
   return (
     <div className={`${styles.container} container`}>
-      <h2>
+      <h2 className='text-lg'>
         <span>You should watch</span> Legally Blonde (2001)
       </h2>
       <div className={styles.poster}>
@@ -32,7 +32,7 @@ const End = ({ reset }) => {
           <a
             key={name}
             href={url}
-            className='box'
+            className={`box input ${styles['streaming-link']}`}
             target='_blank'
             rel='noreferrer noopener'
           >

@@ -1,8 +1,14 @@
 :root {
   --pink: #e26ca4;
   --black: #121212;
+  --black-alpha-40: #12121240;
   --white: #fff;
   --box-background: url('./images/box.svg') no-repeat center/100% 100%;
+  --paper-texture: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/121d52c3-440b-48ea-ab9e-8be8dd70abcd/d73k5mj-9b133ee7-cfd1-453c-8f17-b86da9060ce3.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzEyMWQ1MmMzLTQ0MGItNDhlYS1hYjllLThiZThkZDcwYWJjZFwvZDczazVtai05YjEzM2VlNy1jZmQxLTQ1M2MtOGYxNy1iODZkYTkwNjBjZTMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.NAPy4F9zGd5OKw4cLrQ9_xobFvkipJfQ58vWB62UoP4');
+  --breakpoint-sm: 400px;
+  --breakpoint-md: 600px;
+  --opacity-transition: opacity 150ms;
+  --hover-opacity: 0.75;
 }
 
 * {
@@ -13,12 +19,34 @@ html {
   overscroll-behavior: none;
 }
 
+::-webkit-scrollbar {
+  width: 2em;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--black-alpha-40);
+  border-radius: 1rem;
+  border: 0.75rem var(--white) solid;
+}
+
 body {
   margin: 0;
   font-family: 'Lacquer', system-ui;
   color: var(--black);
   text-transform: lowercase;
   font-weight: 600;
+
+  &::-webkit-scrollbar-thumb {
+    border-color: var(--pink);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--pink);
+  }
 }
 
 a {
@@ -42,6 +70,10 @@ button {
   cursor: pointer;
 }
 
+::selection {
+  background-color: var(--pink);
+}
+
 ::placeholder {
   opacity: 1;
   color: var(--black);
@@ -57,11 +89,18 @@ button {
   padding: 1.5rem;
 }
 
+a,
+button:enabled,
+label:has([class*='checkbox']) {
+  transition: var(--opacity-transition);
+  &:hover {
+    cursor: pointer;
+    opacity: var(--hover-opacity);
+  }
+}
+
 .box {
   background: var(--box-background);
-  min-height: 3.75rem;
-  padding: 0 1rem;
-  font-size: large;
   width: 100%;
 
   &:focus {
@@ -69,8 +108,14 @@ button {
   }
 }
 
-*[class*='fade-']::after,
-*[class*='fade-']::before {
+.input {
+  min-height: 3.75rem;
+  padding: 0 1.5rem;
+  font-size: 1.125rem;
+}
+
+[class*='fade-']::after,
+[class*='fade-']::before {
   content: '';
   position: absolute;
   bottom: 0;
@@ -86,4 +131,12 @@ button {
 .fade-top::before {
   z-index: 1;
   background-image: linear-gradient(var(--white), transparent 20%);
+}
+
+.text-lg {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.text-md {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
 }

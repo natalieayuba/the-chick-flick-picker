@@ -1,19 +1,18 @@
 .dropdown {
+  width: 100%;
   display: flex;
   align-items: center;
   cursor: pointer;
   position: relative;
   z-index: 2;
 
-  input {
-    flex: 1;
-    cursor: inherit;
-    height: 100%;
-    padding-left: 1.5rem;
+  @media screen and (min-width: 400px) {
+    max-width: 300px;
+  }
 
-    &:focus {
-      outline: none;
-    }
+  input {
+    cursor: inherit;
+    padding-left: 1.5rem;
   }
 
   &::after {
@@ -21,15 +20,21 @@
     content: '<';
     right: 1.5rem;
     transform: rotate(-90deg);
+    transition: transform 200ms ease-out;
+    pointer-events: none;
+  }
+
+  &:has(.dropdown-content) {
+    &::after {
+      transform: rotate(90deg);
+    }
   }
 
   .dropdown-content {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
     max-height: 180px;
-    background: var(--box-background);
     padding: 1rem 0;
     overflow: hidden;
 
@@ -46,11 +51,16 @@
         align-items: center;
         padding: 0 1.5rem;
         gap: 1rem;
+        transition: var(--opacity-transition);
 
         .flag {
           aspect-ratio: 3/2;
           width: 1.5rem;
           border-radius: 2px;
+        }
+
+        &:hover {
+          opacity: var(--hover-opacity);
         }
       }
     }
