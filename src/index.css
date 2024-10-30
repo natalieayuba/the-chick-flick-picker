@@ -53,6 +53,10 @@ a {
   color: inherit;
 }
 
+p {
+  margin: 0;
+}
+
 button,
 input {
   border: none;
@@ -87,6 +91,13 @@ button {
 .container {
   height: 100dvh;
   padding: 1.5rem;
+}
+
+.book-cover {
+  background: url('https://img.freepik.com/free-photo/solid-concrete-wall-textured-backdrop_53876-129495.jpg?t=st=1730247312~exp=1730250912~hmac=2a0d5869a98642de2ac0263fb5531d46396301526574217bca75d053ca4a6881&w=1800')
+      no-repeat center/cover,
+    var(--pink);
+  background-blend-mode: soft-light, normal;
 }
 
 a,

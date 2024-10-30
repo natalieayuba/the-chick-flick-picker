@@ -17,7 +17,7 @@ const End = ({ reset }) => {
   };
 
   return (
-    <div className={`${styles.container} container`}>
+    <div className={`${styles.container} container book-cover`}>
       <h2 className='text-lg'>
         <span>You should watch</span> Legally Blonde (2001)
       </h2>
