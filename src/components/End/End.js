@@ -48,6 +48,12 @@ const End = ({ reset }) => {
             <Checkbox value={value} key={value} name='rating' type='radio' />
           ))}
         </div>
+        <div className={styles.toast}>
+          Thanks
+          <br />
+          for the
+          <br /> feedback!
+        </div>
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import Question, { questions } from './components/Question/Question';
 import End from './components/End/End';
 
 const App = () => {
-  const [answers, setAnswers] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(-1);
 
   const next = () => setQuestionIndex(questionIndex + 1);
@@ -14,12 +13,7 @@ const App = () => {
   return questionIndex < 0 ? (
     <Start next={next} />
   ) : questionIndex < questions.length ? (
-    <Question
-      questionIndex={questionIndex}
-      answers={answers}
-      next={next}
-      prev={prev}
-    />
+    <Question questionIndex={questionIndex} next={next} prev={prev} />
   ) : (
     <End reset={reset} />
   );
